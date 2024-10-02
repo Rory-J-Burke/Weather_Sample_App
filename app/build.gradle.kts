@@ -83,6 +83,7 @@ dependencies {
     implementation(libs.material3)
     implementation(libs.androidx.material3.adaptive.navigation.suite)
     implementation(libs.retrofit)
+    implementation(libs.retrofit2.kotlinx.serialization.converter)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
