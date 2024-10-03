@@ -18,4 +18,4 @@ const val CURRENT_WEATHER_ENDPOINT = "data/2.5/weather"
 const val DAILY_FORECAST_ENDPOINT = "data/2.5/forecast/daily"
 
 //I'd like to include this data, but it is behind a paywall.
-const val HOURLY_FORECAST_ENDPOINT = "data/2.5/forecast/hourly"
+//const val HOURLY_FORECAST_ENDPOINT = "data/2.5/forecast/hourly"

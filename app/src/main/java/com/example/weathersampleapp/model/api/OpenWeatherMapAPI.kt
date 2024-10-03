@@ -8,6 +8,7 @@ import com.example.weathersampleapp.model.DIRECT_GEOCODING_ENDPOINT
 import com.example.weathersampleapp.model.REVERSE_GEOCODING_ENDPOINT
 import com.example.weathersampleapp.model.ZIP_GEOCODING_ENDPOINT
 import com.example.weathersampleapp.model.dto.CurrentWeatherResponse
+import com.example.weathersampleapp.model.dto.DailyForecastResponse
 import com.example.weathersampleapp.model.dto.GeocodingResponse
 import com.example.weathersampleapp.model.dto.ZipGeocodingResponse
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
@@ -20,7 +21,7 @@ import retrofit2.http.Query
 
 interface OpenWeatherMapAPI{
     companion object{
-        fun initRetrofit() = Retrofit
+        fun initRetrofit(): OpenWeatherMapAPI = Retrofit
             .Builder()
             .baseUrl(BASE_URL)
             .addConverterFactory(Json.asConverterFactory("application/json".toMediaType()))
@@ -101,5 +102,5 @@ interface OpenWeatherMapAPI{
 
         @Query("lang")
         lang: String = "en",
-    ): Response<CurrentWeatherResponse>
+    ): Response<DailyForecastResponse>
 }

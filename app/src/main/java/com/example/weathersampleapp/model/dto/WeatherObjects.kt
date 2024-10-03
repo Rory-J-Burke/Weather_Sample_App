@@ -2,7 +2,6 @@ package com.example.weathersampleapp.model.dto
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
-import org.json.JSONObject
 
 @Serializable
 data class Coordinates(
@@ -146,92 +145,92 @@ data class CurrentWeatherResponse(
     val cod: Long,
 )
 
-@Serializable
-data class HourForecastSys(
-    @SerialName("pod")
-    val pod: String,
-)
+//@Serializable
+//data class HourForecastSys(
+//    @SerialName("pod")
+//    val pod: String,
+//)
 
-@Serializable
-data class ForecastHour(
-    @SerialName("dt")
-    val dt: Long,
+//@Serializable
+//data class ForecastHour(
+//    @SerialName("dt")
+//    val dt: Long,
+//
+//    @SerialName("main")
+//    val main: Main,
+//
+//    @SerialName("weather")
+//    val weather: List<Weather>,
+//
+//    @SerialName("clouds")
+//    val clouds: Clouds,
+//
+//    @SerialName("wind")
+//    val wind: Wind,
+//
+//    @SerialName("rain")
+//    val rain: Precipitation? = null,
+//
+//    @SerialName("snow")
+//    val snow: Precipitation? = null,
+//
+//    @SerialName("visibility")
+//    val visibility: Int,
+//
+//    @SerialName("pop")
+//    val pop: Double,
+//
+//    @SerialName("sys")
+//    val sys: HourForecastSys,
+//
+//    @SerialName("dt_txt")
+//    val dtText: String,
+//)
 
-    @SerialName("main")
-    val main: Main,
+//@Serializable
+//data class HourlyCity(
+//    @SerialName("id")
+//    val id: Long,
+//
+//    @SerialName("name")
+//    val name: String,
+//
+//    @SerialName("coord")
+//    val coordinates: Coordinates,
+//
+//    @SerialName("country")
+//    val country: String,
+//
+//    @SerialName("population")
+//    val population: Int,
+//
+//    @SerialName("timezone")
+//    val timezone: Long,
+//
+//    @SerialName("sunrise")
+//    val sunrise: Long,
+//
+//    @SerialName("sunset")
+//    val sunset: Long,
+//)
 
-    @SerialName("weather")
-    val weather: List<Weather>,
-
-    @SerialName("clouds")
-    val clouds: Clouds,
-
-    @SerialName("wind")
-    val wind: Wind,
-
-    @SerialName("rain")
-    val rain: Precipitation? = null,
-
-    @SerialName("snow")
-    val snow: Precipitation? = null,
-
-    @SerialName("visibility")
-    val visibility: Int,
-
-    @SerialName("pop")
-    val pop: Double,
-
-    @SerialName("sys")
-    val sys: HourForecastSys,
-
-    @SerialName("dt_txt")
-    val dtText: String,
-)
-
-@Serializable
-data class HourlyCity(
-    @SerialName("id")
-    val id: Long,
-
-    @SerialName("name")
-    val name: String,
-
-    @SerialName("coord")
-    val coordinates: Coordinates,
-
-    @SerialName("country")
-    val country: String,
-
-    @SerialName("population")
-    val population: Int,
-
-    @SerialName("timezone")
-    val timezone: Long,
-
-    @SerialName("sunrise")
-    val sunrise: Long,
-
-    @SerialName("sunset")
-    val sunset: Long,
-)
-
-@Serializable
-data class HourlyForecastResponse(
-    @SerialName("cod")
-    val cod: String,
-
-    @SerialName("message")
-    val message: Double,
-
-    @SerialName("cnt")
-    val cnt: Int,
-
-    @SerialName("list")
-    val list: List<ForecastHour>,
-
-    @SerialName("city")
-    val city: HourlyCity,
-)
+//@Serializable
+//data class HourlyForecastResponse(
+//    @SerialName("cod")
+//    val cod: String,
+//
+//    @SerialName("message")
+//    val message: Double,
+//
+//    @SerialName("cnt")
+//    val cnt: Int,
+//
+//    @SerialName("list")
+//    val list: List<ForecastHour>,
+//
+//    @SerialName("city")
+//    val city: HourlyCity,
+//)
 
 @Serializable
 data class DailyCity(
