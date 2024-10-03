@@ -24,7 +24,7 @@ data class GeocodingResponse(
     val country: String,
 
     @SerialName("state")
-    val state: String,
+    val state: String? = null,
 )
 
 @Serializable
