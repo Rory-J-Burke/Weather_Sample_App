@@ -23,6 +23,16 @@ class WeatherSampleAppViewModel: ViewModel() {
     val uiState: StateFlow<WeatherSampleAppUIState> = _uiState.asStateFlow()
     //
 
+    fun onLaunch(){
+        viewModelScope.launch {
+            async { repository.fetchLatitude() }.await().let { lat ->
+                async { repository.fetchLongitude() }.await().let { lon ->
+                    if(lat != 0.0 && lon != 0.0) multicall(lat, lon)
+                }
+            }
+        }
+    }
+
 
     fun updateSearchFieldValue(s: String){
         viewModelScope.launch {
@@ -57,34 +67,39 @@ class WeatherSampleAppViewModel: ViewModel() {
 
     fun geocodingSelectTrigger(g: GeocodingResponse){
         viewModelScope.launch {
-            launch {
-                launch {
-                    async {
-                        repository.currentWeather(g.lat, g.lon)
-                    }.await()?.let { cw ->
-                        launch {
-                            _uiState.update {
-                                _uiState.value.copy(
-                                    cw = cw
-                                )
-                            }
-                        }
-                    }
-                }
-                launch {
-                    async {
-                        repository.dailyForecast(g.lat, g.lon)
-                    }.await()?.list?.let { lf ->
-                        launch {
-                            _uiState.update {
-                                _uiState.value.copy(
-                                    lf = lf
-                                )
-                            }
-                        }
-                    }
-                }
-            }.join()
+            repository.storeCoordinates(g.lat, g.lon)
+            multicall(g.lat, g.lon)
         }
+    }
+
+    private suspend fun multicall(lat: Double, lon: Double){
+        viewModelScope.launch {
+            launch {
+                async {
+                    repository.currentWeather(lat, lon)
+                }.await()?.let { cw ->
+                    launch {
+                        _uiState.update {
+                            _uiState.value.copy(
+                                cw = cw
+                            )
+                        }
+                    }
+                }
+            }
+            launch {
+                async {
+                    repository.dailyForecast(lat, lon)
+                }.await()?.list?.let { lf ->
+                    launch {
+                        _uiState.update {
+                            _uiState.value.copy(
+                                lf = lf
+                            )
+                        }
+                    }
+                }
+            }
+        }.join()
     }
 }

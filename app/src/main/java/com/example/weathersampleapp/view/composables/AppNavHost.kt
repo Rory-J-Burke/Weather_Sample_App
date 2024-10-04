@@ -20,6 +20,8 @@ fun AppNavHost(
 ) {
     val uiState by vm.uiState.collectAsStateWithLifecycle()
 
+    vm.onLaunch()
+
     NavHost(
         modifier = modifier,
         navController = navController,

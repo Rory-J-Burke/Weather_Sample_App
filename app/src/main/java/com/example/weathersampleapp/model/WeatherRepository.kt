@@ -1,5 +1,6 @@
 package com.example.weathersampleapp.model
 
+import android.content.Context.MODE_PRIVATE
 import android.util.Log
 import android.widget.Toast
 import com.example.weathersampleapp.WeatherSampleApp
@@ -115,4 +116,22 @@ class WeatherRepository private constructor() : CoroutineScope  {
         "Failed to load Forecast data from the network."
     )
     //
+
+    fun storeCoordinates(lat: Double, lon: Double){
+        WeatherSampleApp.weatherContext.getSharedPreferences(
+            "CoordCache", MODE_PRIVATE
+        ).edit().apply{
+            putFloat("LAT_KEY", lat.toFloat())
+            putFloat("LON_KEY", lon.toFloat())
+            apply()
+        }
+    }
+
+    fun fetchLatitude() = WeatherSampleApp.weatherContext.getSharedPreferences(
+        "CoordCache", MODE_PRIVATE
+    ).getFloat("LAT_KEY", 0.0f).toDouble()
+
+    fun fetchLongitude() = WeatherSampleApp.weatherContext.getSharedPreferences(
+        "CoordCache", MODE_PRIVATE
+    ).getFloat("LON_KEY", 0.0f).toDouble()
 }
