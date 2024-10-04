@@ -63,7 +63,7 @@ data class Wind(
     val deg: Int,
 
     @SerialName("gust")
-    val gust: Double,
+    val gust: Double? = null,
 )
 
 @Serializable
@@ -321,7 +321,7 @@ data class ForecastDay(
     val deg: Int,
 
     @SerialName("gust")
-    val gust: Double,
+    val gust: Double? = null,
 
     @SerialName("clouds")
     val clouds: Double,

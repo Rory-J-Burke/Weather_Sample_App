@@ -24,7 +24,9 @@ interface OpenWeatherMapAPI{
         fun initRetrofit(): OpenWeatherMapAPI = Retrofit
             .Builder()
             .baseUrl(BASE_URL)
-            .addConverterFactory(Json.asConverterFactory("application/json".toMediaType()))
+            .addConverterFactory(Json{
+                ignoreUnknownKeys = true
+            }.asConverterFactory("application/json".toMediaType()))
             .build()
             .create(OpenWeatherMapAPI::class.java)
     }
@@ -38,7 +40,7 @@ interface OpenWeatherMapAPI{
         appId: String = API_KEY,
 
         @Query("limit")
-        limit: Int = 5
+        limit: Int = 10
     ): Response<List<GeocodingResponse>>
 
     @GET(ZIP_GEOCODING_ENDPOINT)
@@ -62,7 +64,7 @@ interface OpenWeatherMapAPI{
         appId: String = API_KEY,
 
         @Query("limit")
-        limit: Int = 5
+        limit: Int = 10
     ): Response<List<GeocodingResponse>>
 
     @GET(CURRENT_WEATHER_ENDPOINT)

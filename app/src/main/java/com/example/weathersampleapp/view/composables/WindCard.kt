@@ -16,7 +16,7 @@ fun WindCard(
             Text(text = "Wind")
             Text(text = "${w.speed} mph")
             Text(text = "From: ${w.deg}")
-            Text(text = "Gusting: ${w.gust}")
+            w.gust?.let{Text(text = "Gusting: $it")}
         }
     }
 }

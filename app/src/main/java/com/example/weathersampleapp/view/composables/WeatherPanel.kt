@@ -1,7 +1,10 @@
 package com.example.weathersampleapp.view.composables
 
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import com.example.weathersampleapp.model.dto.CurrentWeatherResponse
 import com.example.weathersampleapp.model.dto.ForecastDay
@@ -20,9 +23,10 @@ fun WeatherPanel(
     rowSelectTrigger: (d: ForecastDay) -> Unit,
     geocodingSelectTrigger: (it: GeocodingResponse) -> Unit
 ){
-    Column {
+    Column(
+        modifier = Modifier.verticalScroll(rememberScrollState())
+    ) {
         WeatherSearchBar(
-            navController,
             searchFieldValue,
             lg,
             updateSearchFieldValue,
@@ -30,7 +34,7 @@ fun WeatherPanel(
             geocodingSelectTrigger
         )
         CurrentWeatherPanel(cw)
-        DailyForecastPanel(navController, lf, rowSelectTrigger)
+//        DailyForecastPanel(navController, lf, rowSelectTrigger)
         WindCard(cw.wind)
     }
 }

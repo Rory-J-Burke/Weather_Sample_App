@@ -1,7 +1,9 @@
 package com.example.weathersampleapp.viewmodel
 
+import android.content.Context.MODE_PRIVATE
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.weathersampleapp.WeatherSampleApp
 import com.example.weathersampleapp.model.WeatherRepository
 import com.example.weathersampleapp.model.dto.ForecastDay
 import com.example.weathersampleapp.model.dto.GeocodingResponse
@@ -25,8 +27,8 @@ class WeatherSampleAppViewModel: ViewModel() {
 
     fun onLaunch(){
         viewModelScope.launch {
-            async { repository.fetchLatitude() }.await().let { lat ->
-                async { repository.fetchLongitude() }.await().let { lon ->
+            async { fetchLatitude() }.await().let { lat ->
+                async { fetchLongitude() }.await().let { lon ->
                     if(lat != 0.0 && lon != 0.0) multicall(lat, lon)
                 }
             }
@@ -67,7 +69,7 @@ class WeatherSampleAppViewModel: ViewModel() {
 
     fun geocodingSelectTrigger(g: GeocodingResponse){
         viewModelScope.launch {
-            repository.storeCoordinates(g.lat, g.lon)
+            storeCoordinates(g.lat, g.lon)
             multicall(g.lat, g.lon)
         }
     }
@@ -102,4 +104,22 @@ class WeatherSampleAppViewModel: ViewModel() {
             }
         }.join()
     }
+
+    private fun storeCoordinates(lat: Double, lon: Double){
+        WeatherSampleApp.weatherContext.getSharedPreferences(
+            "CoordCache", MODE_PRIVATE
+        ).edit().apply{
+            putFloat("LAT_KEY", lat.toFloat())
+            putFloat("LON_KEY", lon.toFloat())
+            apply()
+        }
+    }
+
+    private fun fetchLatitude() = WeatherSampleApp.weatherContext.getSharedPreferences(
+        "CoordCache", MODE_PRIVATE
+    ).getFloat("LAT_KEY", 0.0f).toDouble()
+
+    private fun fetchLongitude() = WeatherSampleApp.weatherContext.getSharedPreferences(
+        "CoordCache", MODE_PRIVATE
+    ).getFloat("LON_KEY", 0.0f).toDouble()
 }

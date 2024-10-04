@@ -21,13 +21,15 @@ fun DailyForecastDetailPanel(
 ){
     Column {
         Text(text = timestamp(d.dt))
-        GlideImage(
-            model = "https://openweathermap.org/img/wn/${d.weather[0].icon}@2x.png",
-            contentDescription = d.weather[0].description,
-            loading = placeholder(ColorPainter(Color.Gray)),
-            failure = placeholder(ColorPainter(Color.Black)),
-            modifier = Modifier
-        )
+        d.weather.ifEmpty { null }?.get(0)?.let {
+            GlideImage(
+                model = "https://openweathermap.org/img/wn/${it.icon}@2x.png",
+                contentDescription = it.description,
+                loading = placeholder(ColorPainter(Color.Gray)),
+                failure = placeholder(ColorPainter(Color.Black)),
+                modifier = Modifier
+            )
+        }
         Text(text = "${d.temp.max} / ${d.temp.min}")
 
         WindCard(Wind(d.speed, d.deg, d.gust))

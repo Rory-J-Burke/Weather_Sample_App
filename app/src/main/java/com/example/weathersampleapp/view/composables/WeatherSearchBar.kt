@@ -12,13 +12,11 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
-import androidx.navigation.NavHostController
 import com.example.weathersampleapp.model.dto.GeocodingResponse
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun WeatherSearchBar(
-    navController: NavHostController,
     searchFieldValue: String = "",
     lg: List<GeocodingResponse> = listOf(),
     updateSearchFieldValue: (s: String) -> Unit,
@@ -36,7 +34,12 @@ fun WeatherSearchBar(
             },
             sheetState = sheetState
         ) {
-            GeocodingResultList(navController,lg, geocodingSelectTrigger)
+            GeocodingResultList(
+                lg
+            ) {
+                geocodingSelectTrigger(it)
+                showBottomSheet = false
+            }
         }
     }
     //

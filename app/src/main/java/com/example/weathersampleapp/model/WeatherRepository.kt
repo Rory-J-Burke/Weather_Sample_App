@@ -46,7 +46,7 @@ class WeatherRepository private constructor() : CoroutineScope  {
         try {
             if (it.isSuccessful) it.body()
             else null.also{
-                Log.d(TAG, "Non-Exception Failure!")
+                Log.d(TAG, errorMessage)
                 //Here we would log to other logging services
                 //Splunk, Crashlytics, etc.
                 Toast.makeText(
@@ -65,7 +65,7 @@ class WeatherRepository private constructor() : CoroutineScope  {
             }
         } catch (e: Throwable) {
             null.also{
-                Log.d(TAG, "Non-Exception Failure!")
+                Log.d(TAG, "Throwable ${e.message}")
                 Toast.makeText(
                     WeatherSampleApp.weatherContext,
                     errorMessage,
@@ -116,22 +116,4 @@ class WeatherRepository private constructor() : CoroutineScope  {
         "Failed to load Forecast data from the network."
     )
     //
-
-    fun storeCoordinates(lat: Double, lon: Double){
-        WeatherSampleApp.weatherContext.getSharedPreferences(
-            "CoordCache", MODE_PRIVATE
-        ).edit().apply{
-            putFloat("LAT_KEY", lat.toFloat())
-            putFloat("LON_KEY", lon.toFloat())
-            apply()
-        }
-    }
-
-    fun fetchLatitude() = WeatherSampleApp.weatherContext.getSharedPreferences(
-        "CoordCache", MODE_PRIVATE
-    ).getFloat("LAT_KEY", 0.0f).toDouble()
-
-    fun fetchLongitude() = WeatherSampleApp.weatherContext.getSharedPreferences(
-        "CoordCache", MODE_PRIVATE
-    ).getFloat("LON_KEY", 0.0f).toDouble()
 }
