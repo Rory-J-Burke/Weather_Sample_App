@@ -2,18 +2,45 @@ package com.example.weathersampleapp.view.composables
 
 import androidx.compose.foundation.layout.Row
 import androidx.compose.material3.Button
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
+import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.tooling.preview.Preview
-import com.example.weathersampleapp.view.ui.theme.WeatherSampleAppTheme
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
+import androidx.navigation.NavHostController
+import com.example.weathersampleapp.model.dto.GeocodingResponse
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun WeatherSearchBar(
+    navController: NavHostController,
     searchFieldValue: String = "",
+    lg: List<GeocodingResponse> = listOf(),
     updateSearchFieldValue: (s: String) -> Unit,
     searchBoxTrigger: () -> Unit,
+    geocodingSelectTrigger: (it: GeocodingResponse) -> Unit
 ){
+    //bottom sheet implementation for selecting geocoding result
+    val sheetState = rememberModalBottomSheetState()
+    var showBottomSheet by remember { mutableStateOf(false) }
+
+    if (showBottomSheet) {
+        ModalBottomSheet(
+            onDismissRequest = {
+                showBottomSheet = false
+            },
+            sheetState = sheetState
+        ) {
+            GeocodingResultList(navController,lg, geocodingSelectTrigger)
+        }
+    }
+    //
+
     Row {
         TextField(
             value = searchFieldValue,
@@ -23,20 +50,9 @@ fun WeatherSearchBar(
         )
         Button(onClick = {
             searchBoxTrigger()
+            showBottomSheet = true
         }) {
             Text(text = "Search")
         }
-    }
-}
-
-@Preview(showBackground = true)
-@Composable
-fun WeatherSearchBarPreview() {
-    WeatherSampleAppTheme {
-        WeatherSearchBar(
-            "Android",
-            {},
-            {}
-        )
     }
 }

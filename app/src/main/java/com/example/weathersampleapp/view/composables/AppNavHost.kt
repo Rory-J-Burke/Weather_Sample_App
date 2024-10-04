@@ -9,16 +9,16 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.example.weathersampleapp.view.NavigationItem
-//import com.example.weathersampleapp.viewmodel.WeatherSampleAppViewModel
+import com.example.weathersampleapp.viewmodel.WeatherSampleAppViewModel
 
 @Composable
 fun AppNavHost(
     modifier: Modifier = Modifier,
     startDestination: String = NavigationItem.Current.route,
     navController: NavHostController,
-//    vm: WeatherSampleAppViewModel = viewModel()
+    vm: WeatherSampleAppViewModel = viewModel()
 ) {
-//    val uiState by vm.uiState.collectAsStateWithLifecycle()
+    val uiState by vm.uiState.collectAsStateWithLifecycle()
 
     NavHost(
         modifier = modifier,
@@ -26,21 +26,21 @@ fun AppNavHost(
         startDestination = startDestination
     ) {
         composable(NavigationItem.Current.route) {
-//            WeatherPanel(
-//                navController: NavHostController,
-//                searchFieldValue: String = "",
-//                cw: CurrentWeatherResponse = DUMMY_CURRENT_WEATHER,
-//                l: List<ForecastDay> = listOf(),
-//                updateSearchFieldValue: (s: String) -> Unit,
-//                searchBoxTrigger: () -> Unit,
-//                rowSelectTrigger: (d: ForecastDay) -> Unit
-//            )
+            WeatherPanel(
+                navController,
+                uiState.searchFieldValue,
+                uiState.cw,
+                uiState.lf ?: listOf(),
+                uiState.lg ?: listOf(),
+                vm::updateSearchFieldValue,
+                vm::searchBoxTrigger,
+                vm::rowSelectTrigger,
+                vm::geocodingSelectTrigger
+            )
         }
 
         composable(NavigationItem.ForecastDayDetail.route) {
-//            DailyForecastDetailPanel(
-//                d: ForecastDay = DUMMY_FORECAST_DAY
-//            )
+            DailyForecastDetailPanel(uiState.d)
         }
     }
 }
