@@ -94,7 +94,6 @@ data class CurrentSys(
 
     @SerialName("sunset")
     val sunset: Long,
-
 )
 
 @Serializable
@@ -319,7 +318,7 @@ data class ForecastDay(
     val speed: Double,
 
     @SerialName("deg")
-    val deg: Double,
+    val deg: Int,
 
     @SerialName("gust")
     val gust: Double,
@@ -332,7 +331,6 @@ data class ForecastDay(
 
     @SerialName("rain")
     val rain: Double,
-
 )
 
 @Serializable
