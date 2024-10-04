@@ -81,13 +81,13 @@ data class Clouds(
 @Serializable
 data class CurrentSys(
     @SerialName("type")
-    val type: Int,
+    val type: Int? = null,
 
     @SerialName("id")
-    val id: Long,
+    val id: Long? = null,
 
     @SerialName("country")
-    val country: String,
+    val country: String? = null,
 
     @SerialName("sunrise")
     val sunrise: Long,

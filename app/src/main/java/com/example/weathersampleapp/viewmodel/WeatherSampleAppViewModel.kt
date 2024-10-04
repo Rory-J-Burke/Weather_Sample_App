@@ -29,7 +29,8 @@ class WeatherSampleAppViewModel: ViewModel() {
         viewModelScope.launch {
             async { fetchLatitude() }.await().let { lat ->
                 async { fetchLongitude() }.await().let { lon ->
-                    if(lat != 0.0 && lon != 0.0) multicall(lat, lon)
+//                    if(lat != 0.0 && lon != 0.0) multicall(lat, lon)
+                    multicall(lat, lon)
                 }
             }
         }
